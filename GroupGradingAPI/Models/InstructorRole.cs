@@ -9,7 +9,7 @@ namespace GroupGradingAPI.Models
     public class InstructorRole
     {
         [Key]
-        public string InstructorRoldeId { get; set; }
+        public string InstructorRoleId { get; set; }
 
         public string Role { get; set; }
     }
