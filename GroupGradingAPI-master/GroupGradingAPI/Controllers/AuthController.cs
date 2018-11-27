@@ -49,7 +49,7 @@ namespace GroupGradingAPI.Controllers
                     await _userManager.AddToRoleAsync(user, "Teacher");
                 }
 
-                _context.Add(user);
+                //_context.Add(user);
 
                
                 await _context.SaveChangesAsync();

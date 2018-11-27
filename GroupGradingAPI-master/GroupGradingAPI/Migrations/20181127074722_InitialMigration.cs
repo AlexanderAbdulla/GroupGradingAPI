@@ -40,10 +40,7 @@ namespace GroupGradingAPI.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -107,6 +104,22 @@ namespace GroupGradingAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Grades", x => x.GradeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Instructors",
+                columns: table => new
+                {
+                    InstructorId = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: true),
+                    LastName = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    InstructorRoleId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Instructors", x => x.InstructorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,17 +260,17 @@ namespace GroupGradingAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "71c63208-3354-4625-a2a5-802c296f7ada", "Admin", "ADMIN" });
+                values: new object[] { "1", "b1d74bee-0922-417d-a964-2479348f2d72", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2", "fa1ae048-f43d-4c23-973c-2471ff3c2e73", "Teacher", "TEACHER" });
+                values: new object[] { "2", "4839a08f-3f46-411f-9f21-58578eb1346c", "Teacher", "TEACHER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3", "c279df22-3dba-4169-8873-23de7e437d2f", "Student", "STUDENT" });
+                values: new object[] { "3", "e6774ff6-e1eb-47d1-93fe-08e457b3c447", "Student", "STUDENT" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -327,6 +340,9 @@ namespace GroupGradingAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Grades");
+
+            migrationBuilder.DropTable(
+                name: "Instructors");
 
             migrationBuilder.DropTable(
                 name: "StudentGroup");

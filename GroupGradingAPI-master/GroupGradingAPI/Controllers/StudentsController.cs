@@ -10,11 +10,13 @@ using GroupGradingAPI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Cors;
 using Newtonsoft.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GroupGradingAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StudentsController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
