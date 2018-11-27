@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using GroupGradingAPI.Data;
 using GroupGradingAPI.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Cors;
+using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
@@ -14,113 +17,126 @@ namespace GroupGradingAPI.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly GradingContext _context;
 
-        public StudentsController(GradingContext context)
+        public StudentsController(GradingContext context, UserManager<IdentityUser> userManager)
         {
+            _userManager = userManager;
             _context = context;
         }
 
-        // GET: api/Students
-        [HttpGet]
-        public IEnumerable<Student> GetStudents()
+        // CREATE VALUES
+        
+        [EnableCors("AllAccessCors")]
+        [HttpPost("create")]
+        public ActionResult<string> createCourse([FromBody] Student model)
         {
-            return _context.Students;
-        }
-
-        // GET: api/Students/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetStudent([FromRoute] string id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var student = await _context.Students.FindAsync(id);
-
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(student);
-        }
-
-        // PUT: api/Students/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutStudent([FromRoute] string id, [FromBody] Student student)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != student.CourseId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(student).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                Student newStudent = new Student();
+                newStudent.StudentId = model.StudentId;
+                newStudent.CourseId = model.CourseId;
+                newStudent.LastName = model.LastName;
+                newStudent.FirstName = model.FirstName;
+                _context.Students.Add(newStudent);
+                _context.SaveChanges();
+                return JsonConvert.SerializeObject("Created New Student");
             }
-            catch (DbUpdateConcurrencyException)
+            catch (Exception e)
             {
-                if (!StudentExists(id))
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        // DELETE VALUES
+        [EnableCors("AllAccessCors")]
+        [HttpPost("delete/{id}")]
+        public ActionResult<string> deleteStudent(string id)
+        {
+            try
+            {
+                var student = _context.Students.Where(c => c.StudentId == id).FirstOrDefault();
+
+                _context.Students.Remove(student);
+                _context.SaveChanges();
+                return JsonConvert.SerializeObject("Deleted ");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        // GET VALUE BY ID
+        [HttpGet("{id}")]
+        public ActionResult<string> getStudents(string id)
+        {
+            try
+            {
+                var student = _context.Students.Where(c => c.StudentId == id).FirstOrDefault();
+                return JsonConvert.SerializeObject(student);
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+
+        [EnableCors("AllAccessCors")]
+        //EDIT VALUES
+        [HttpPost("{id}")]
+        public ActionResult<string> seStudentData([FromBody] Student model, string id)
+        {
+            try
+            {
+                var student = _context.Students
+                    .Where(c => c.StudentId == id).FirstOrDefault();
+
+                /*
+                course.CourseName = model.CourseName;
+                course.CourseTerm = model.CourseTerm;
+                course.CourseYear = model.CourseYear;
+                */
+                _context.Students.Update(student);
+                _context.SaveChanges();
+                return JsonConvert.SerializeObject("Success");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        //GET ALL
+        [HttpGet]
+        public ActionResult<string> getStudentData()
+        {
+            try
+            {
+                try
                 {
-                    return NotFound();
+                    var students = _context.Students.ToList();
+                    return JsonConvert.SerializeObject(students);
                 }
-                else
+                catch (Exception e)
                 {
-                    throw;
+
                 }
+                return JsonConvert.SerializeObject("Error");
             }
-
-            return NoContent();
-        }
-
-        // POST: api/Students
-        [HttpPost]
-        public async Task<IActionResult> PostStudent([FromBody] Student student)
-        {
-            if (!ModelState.IsValid)
+            catch (Exception e)
             {
-                return BadRequest(ModelState);
+
             }
-
-            _context.Students.Add(student);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetStudent", new { id = student.CourseId }, student);
-        }
-
-        // DELETE: api/Students/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStudent([FromRoute] string id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var student = await _context.Students.FindAsync(id);
-            if (student == null)
-            {
-                return NotFound();
-            }
-
-            _context.Students.Remove(student);
-            await _context.SaveChangesAsync();
-
-            return Ok(student);
-        }
-
-        private bool StudentExists(string id)
-        {
-            return _context.Students.Any(e => e.CourseId == id);
+            return JsonConvert.SerializeObject("Error");
         }
     }
 }

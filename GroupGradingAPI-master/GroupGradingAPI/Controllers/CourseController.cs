@@ -48,7 +48,7 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        // CREATE VALUES
+        // DELETE VALUES
         [EnableCors("AllAccessCors")]
         [HttpPost("delete/{id}")]
         public ActionResult<string> deleteCourse(int id)
