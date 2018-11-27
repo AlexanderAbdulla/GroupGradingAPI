@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GroupGradingAPI.Data;
 using GroupGradingAPI.Models;
 using GroupGradingAPI.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : Controller
