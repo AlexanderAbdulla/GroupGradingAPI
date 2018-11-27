@@ -16,7 +16,6 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -32,8 +31,8 @@ namespace GroupGradingAPI.Controllers
         }
 
         [EnableCors("AllAccessCors")]
-        [HttpPost]
-        public async Task<ActionResult> InsertUser([FromBody] IdentityUser model)
+        [HttpPost("register")]
+        public async Task<ActionResult> InsertUser([FromBody] RegistationModel model)
         {
             try
             {
@@ -42,10 +41,9 @@ namespace GroupGradingAPI.Controllers
                 {
                     Email = model.Email,
                     UserName = model.UserName,
-                    PasswordHash = model.PasswordHash,
                     SecurityStamp = newGuid.ToString(),
                 };
-                var result = await _userManager.CreateAsync(user, model.PasswordHash);
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, "Teacher");
@@ -65,10 +63,10 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         [HttpPost("login")]
-        public async Task<ActionResult> Login(IdentityUser model)
+        public async Task<ActionResult> Login(CredentialsModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName);
-            if (user != null && await _userManager.CheckPasswordAsync(user, model.PasswordHash))
+            if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var claim = new[] {
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
@@ -103,7 +101,5 @@ namespace GroupGradingAPI.Controllers
             }
             return Unauthorized();
         }
-
-
     }
 }
