@@ -48,6 +48,26 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        // CREATE VALUES
+        [EnableCors("AllAccessCors")]
+        [HttpPost("delete/{id}")]
+        public ActionResult<string> deleteCourse(int id)
+        {
+            try
+            {
+                var course = _context.Courses.Where(c => c.CourseCrn == id).FirstOrDefault();
+                
+                _context.Courses.Remove(course);
+                _context.SaveChanges();
+                return JsonConvert.SerializeObject("Deleted ");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
         [EnableCors("AllAccessCors")]
         // GET VALUE BY ID
         [HttpGet("{id}")]
