@@ -49,12 +49,12 @@ namespace GroupGradingAPI.Controllers
 
         // DELETE VALUES
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{id}")]
-        public ActionResult<string> deleteEvaluation(string id)
+        [HttpPost("delete/{gradeId}/{studentId}")]
+        public ActionResult<string> deleteEvaluation(string gradeId, string studentId)
         {
             try
             {
-                var grade = _context.Grades.Where(c => c.GradeId == id).FirstOrDefault();
+                var grade = _context.Grades.Where(c => c.GradeId == gradeId && c.StudentId == studentId).FirstOrDefault();
 
                 _context.Grades.Remove(grade);
                 _context.SaveChanges();
@@ -69,12 +69,12 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         // GET VALUE BY ID
-        [HttpGet("{id}")]
-        public ActionResult<string> getEvaluations(string id)
+        [HttpGet("{gradeId}/{studentId}")]
+        public ActionResult<string> getEvaluations(string gradeId, string studentId)
         {
             try
             {
-                var grade = _context.Grades.Where(c => c.GradeId == id).FirstOrDefault();
+                var grade = _context.Grades.Where(c => c.GradeId == gradeId && c.StudentId == studentId).FirstOrDefault();
                 return JsonConvert.SerializeObject(grade);
             }
             catch (Exception e)
@@ -110,7 +110,7 @@ namespace GroupGradingAPI.Controllers
         [EnableCors("AllAccessCors")]
         //GET ALL
         [HttpGet]
-        public ActionResult<string> getEvaluationData()
+        public ActionResult<string> getGradeData()
         {
             try
             {
