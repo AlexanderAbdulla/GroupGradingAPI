@@ -24,6 +24,8 @@ namespace GroupGradingAPI.Controllers
             _userManager = userManager;
             _context = context;
         }
+
+        // CREATE VALUES
         [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createCourse([FromBody] CreateCourseViewModel model)
@@ -47,7 +49,7 @@ namespace GroupGradingAPI.Controllers
         }
 
         [EnableCors("AllAccessCors")]
-        // GET api/values
+        // GET VALUE BY ID
         [HttpGet("{id}")]
         public ActionResult<string> getCourse(int id)
         {
@@ -62,7 +64,10 @@ namespace GroupGradingAPI.Controllers
             }
             return JsonConvert.SerializeObject("Error");
         }
+
+
         [EnableCors("AllAccessCors")]
+        //EDIT VALUES
         [HttpPost("{id}")]
         public ActionResult<string> setCourseData([FromBody] SetCourseViewModel model, int id)
         {
@@ -75,6 +80,31 @@ namespace GroupGradingAPI.Controllers
                 _context.Courses.Update(course);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        //GET ALL
+        [HttpGet]
+        public ActionResult<string> getCourseData()
+        {
+            try
+            {
+                try
+                {
+                    var courses = _context.Courses.ToList();
+                    return JsonConvert.SerializeObject(courses);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
             }
             catch (Exception e)
             {
