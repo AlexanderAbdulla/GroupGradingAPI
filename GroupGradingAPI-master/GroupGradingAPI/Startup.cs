@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace GroupGradingAPI
 {
@@ -63,6 +64,11 @@ namespace GroupGradingAPI
                 };
             });
 
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Group Grading API", Version = "v1" });
+            });
+
             //addcores
             services.AddCors(o => o.AddPolicy("AllAccessCors", builder =>
             {
@@ -89,9 +95,15 @@ namespace GroupGradingAPI
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Group Grading API V1");
+            });
             app.UseMvc();
-
-            //DummyData.Initialize(app);
+            app.Run(async c => {
+                c.Response.Redirect("swagger");
+            });
         }
     }
 }
