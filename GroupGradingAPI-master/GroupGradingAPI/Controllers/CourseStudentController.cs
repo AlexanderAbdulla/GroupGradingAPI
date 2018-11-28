@@ -102,8 +102,8 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
-        [HttpPost("{studentId}/{courseId}")]
-        public ActionResult<string> setStudentData([FromBody] CourseStudent model, string studentId, string courseId)
+        [HttpPut("{studentId}/{courseId}")]
+        public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] string courseId)
         {
             try
             {

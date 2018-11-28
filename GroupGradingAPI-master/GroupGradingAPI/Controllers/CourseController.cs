@@ -90,8 +90,8 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
-        [HttpPost("{id}")]
-        public ActionResult<string> setCourseData([FromBody] SetCourseViewModel model, int id)
+        [HttpPut("{id}")]
+        public ActionResult<string> setCourseData([FromBody] SetCourseViewModel model, [FromRoute] int id)
         {
             try
             {
