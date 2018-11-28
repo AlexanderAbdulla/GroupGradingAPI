@@ -34,6 +34,17 @@ namespace GroupGradingAPI.Controllers
         [HttpPost("register")]
         public async Task<ActionResult> InsertUser([FromBody] RegistationModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model State Invalid");
+            }
+
+            if (_userManager.FindByNameAsync(model.UserName) != null
+                 || _userManager.FindByEmailAsync(model.Email) != null )
+            {
+                return BadRequest("User already exists");
+            }
+
             try
             {
                 Guid newGuid = Guid.NewGuid();
