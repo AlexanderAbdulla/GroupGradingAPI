@@ -110,6 +110,9 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /// <summary>
+        /// Shows all current courses within the database.
+        /// </summary>
         [EnableCors("AllAccessCors")]
         //GET ALL
         [HttpGet]
