@@ -102,6 +102,7 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
+        //CANNOT EDIT STUDENT ID 
         [HttpPut("{studentId}/{courseId}")]
         public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] string courseId)
         {
@@ -116,7 +117,7 @@ namespace GroupGradingAPI.Controllers
                 courseStudent.CourseCrn = model.CourseCrn;
                 courseStudent.CourseTerm = model.CourseTerm;
                 courseStudent.Courseyear = model.Courseyear;
-
+                //courseStudent.StudentId = model.StudentId;
 
                 _context.CourseStudents.Update(courseStudent);
                 _context.SaveChanges();
