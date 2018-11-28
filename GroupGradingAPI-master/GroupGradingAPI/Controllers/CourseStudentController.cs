@@ -1,5 +1,6 @@
 ﻿using GroupGradingAPI.Data;
 using GroupGradingAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace GroupGradingAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseStudentController
@@ -100,8 +102,8 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
-        [HttpPost("{studentId}/{courseId}")]
-        public ActionResult<string> setStudentData([FromBody] CourseStudent model, string studentId, string courseId)
+        [HttpPut("{studentId}/{courseId}")]
+        public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] string courseId)
         {
             try
             {
