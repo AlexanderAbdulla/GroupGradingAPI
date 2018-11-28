@@ -16,7 +16,7 @@ namespace GroupGradingAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     public class StudentsController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
