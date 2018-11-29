@@ -125,7 +125,10 @@ namespace GroupGradingAPI.Controllers
                 };
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claim, "Token");
                 var userRoles = await _userManager.GetRolesAsync(user);
-                claimsIdentity.AddClaim(new Claim("roles", string.Join("," , userRoles.ToList())));
+                foreach (var role in userRoles)
+                {
+                    claimsIdentity.AddClaim(new Claim("roles", role));
+                }
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]));
 
