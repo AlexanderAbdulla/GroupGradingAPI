@@ -100,11 +100,11 @@ namespace GroupGradingAPI.Controllers
                 var student = _context.Students
                     .Where(c => c.StudentId == id).FirstOrDefault();
 
-                /*
-                course.CourseName = model.CourseName;
-                course.CourseTerm = model.CourseTerm;
-                course.CourseYear = model.CourseYear;
-                */
+                student.CourseId = model.CourseId;
+                student.Email = model.Email;
+                student.FirstName = model.FirstName;
+                student.LastName = model.LastName;
+                
                 _context.Students.Update(student);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
