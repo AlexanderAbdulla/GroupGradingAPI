@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseStudentController
