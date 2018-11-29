@@ -111,11 +111,14 @@ namespace GroupGradingAPI.Controllers
                 var evaluation = _context.Evaluations
                     .Where(c => c.EvaluationId == id).FirstOrDefault();
 
-                /*
-                course.CourseName = model.CourseName;
-                course.CourseTerm = model.CourseTerm;
-                course.CourseYear = model.CourseYear;
-                */
+
+                evaluation.CourseCrn = model.CourseCrn;
+                evaluation.CourseTerm = model.CourseTerm;
+                evaluation.CourseYear = model.CourseYear;
+                evaluation.EvaluationId = model.EvaluationId;
+                evaluation.StudentGroupId = model.StudentGroupId;
+
+                
                 _context.Evaluations.Update(evaluation);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
