@@ -129,7 +129,7 @@ namespace GroupGradingAPI.Controllers
 
                 foreach (var role in userRoles)
                 {
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+                    claimsIdentity.AddClaim(new Claim("role", role));
                 }
 
                 var signinKey = new SymmetricSecurityKey(
