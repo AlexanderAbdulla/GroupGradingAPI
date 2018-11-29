@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace GroupGradingAPI.Controllers
 {
+    [EnableCors("AllAccessCors")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -30,17 +31,16 @@ namespace GroupGradingAPI.Controllers
             _context = context;
         }
 
-        [EnableCors("AllAccessCors")]
-        [HttpPost("register")]
-        public async Task<ActionResult> InsertUser([FromBody] RegistationModel model)
+        [HttpPost("teacher/register")]
+        public async Task<ActionResult> InsertTeacher([FromBody] RegistationModel model)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest("Model State Invalid");
             }
-
-            if (_userManager.FindByNameAsync(model.UserName) != null
-                 || _userManager.FindByEmailAsync(model.Email) != null )
+            var userTest = await _userManager.FindByNameAsync(model.UserName);
+            var emailTest = await _userManager.FindByEmailAsync(model.Email);
+            if (userTest != null || emailTest != null )
             {
                 return BadRequest("User already exists");
             }
@@ -60,9 +60,16 @@ namespace GroupGradingAPI.Controllers
                     await _userManager.AddToRoleAsync(user, "Teacher");
                 }
 
-                //_context.Add(user);
+                Instructor instructor = new Instructor {
+                    Email = model.Email,
+                    Password = model.Password,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    InstructorId = user.Id,
+                    InstructorRoleId = "Teacher"
+                };
 
-               
+                await _context.Instructors.AddAsync(instructor);
                 await _context.SaveChangesAsync();
                 return Ok(new { Username = user.UserName, response = true });
             }
@@ -72,7 +79,52 @@ namespace GroupGradingAPI.Controllers
             }
         }
 
-        [EnableCors("AllAccessCors")]
+        [HttpPost("student/register")]
+        public async Task<ActionResult> InsertStudent([FromBody] RegistationModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Model State Invalid");
+            }
+            var userTest = await _userManager.FindByNameAsync(model.UserName);
+            var emailTest = await _userManager.FindByEmailAsync(model.Email);
+            if (userTest != null || emailTest != null)
+            {
+                return BadRequest("User already exists");
+            }
+
+            try
+            {
+                Guid newGuid = Guid.NewGuid();
+                var user = new IdentityUser
+                {
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    SecurityStamp = newGuid.ToString(),
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user, "Student");
+                }
+
+                Student student = new Student {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    StudentId = user.Id,
+                    Email = model.Email
+                };
+
+                await _context.Students.AddAsync(student);
+                await _context.SaveChangesAsync();
+                return Ok(new { Username = user.UserName, response = true });
+            }
+            catch (Exception e)
+            {
+                return Ok(new { Error = e.Message, response = false });
+            }
+        }
+
         [HttpPost("login")]
         public async Task<ActionResult> Login(CredentialsModel model)
         {
