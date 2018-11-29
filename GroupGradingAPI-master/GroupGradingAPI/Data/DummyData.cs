@@ -33,14 +33,6 @@ namespace GroupGradingAPI.Data
                 context.Grades.AddRange(_grade);
                 context.SaveChanges();
 
-                var _instructor = DummyData.GetInstructors(context).ToArray();
-                context.Instructors.AddRange(_instructor);
-                context.SaveChanges();
-
-                var _student = DummyData.GetStudents(context).ToArray();
-                context.Students.AddRange(_student);
-                context.SaveChanges();
-
                 var _sGroup = DummyData.GetStudentGroups(context).ToArray();
                 context.StudentGroup.AddRange(_sGroup);
                 context.SaveChanges();
@@ -93,30 +85,6 @@ namespace GroupGradingAPI.Data
               }
             };
             return _grade;
-        }
-
-        public static List<Instructor> GetInstructors(GradingContext db)
-        {
-            List<Instructor> _instructor = new List<Instructor>()
-            {
-              new Instructor
-              {
-                  FirstName="Darcy", LastName="Smith", Password="1234", Email="mail@mail.co", InstructorRoleId="teachrole"
-              }
-            };
-            return _instructor;
-        }
-
-        public static List<Student> GetStudents(GradingContext db)
-        {
-            List<Student> _student = new List<Student>()
-            {
-              new Student
-              {
-                  CourseId="coooooourse",FirstName="Tommy", LastName="Lee", Email="mail@mail.ca"
-              }
-            };
-            return _student;
         }
 
         public static List<StudentGroup> GetStudentGroups(GradingContext db)
