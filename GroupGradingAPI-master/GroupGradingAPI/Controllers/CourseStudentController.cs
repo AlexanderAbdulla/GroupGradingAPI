@@ -20,6 +20,14 @@ namespace GroupGradingAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly GradingContext _context;
 
+        /**
+         * CourseStudentController
+         *
+         * Constructor
+         *
+         * @param GradingContext context - database context
+         * @param UserManager<IdentityUser> userManger - manages user identities
+         */
         public CourseStudentController(GradingContext context, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
@@ -38,6 +46,11 @@ namespace GroupGradingAPI.Controllers
         public string CourseTerm { get; set; }
         public int Courseyear { get; set; }
          */
+        /**
+         *  Inserts a Student into a Course.
+         * @param CourseStudent model - database context
+         * @return JSONObject - returns a JSONObject confirming student enrollment; else returns an error
+         */
         [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createCourseStudent([FromBody] CourseStudent model)
@@ -50,7 +63,7 @@ namespace GroupGradingAPI.Controllers
                 newCourseStudent.CourseCrn = model.CourseCrn;
                 newCourseStudent.CourseTerm = model.CourseTerm;
                 newCourseStudent.Courseyear = model.Courseyear;
-                
+
                 _context.CourseStudents.Add(newCourseStudent);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Created New CourseStudent");
@@ -62,7 +75,12 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        // DELETE VALUES
+        /**
+         *  Deletes a Student from a Course.
+         * @param string studentId - Student ID
+         * @param string courseId - Course ID
+         * @return JSONObject - returns a JSONObject confirming student removal; else returns an error
+         */
         [EnableCors("AllAccessCors")]
         [HttpPost("delete/{studentId}/{courseId}")]
         public ActionResult<string> deleteCourseStudent(string studentId, string courseId)
@@ -82,8 +100,13 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /**
+         * Gets a student from a specific course.
+         * @param string studentId - Student ID
+         * @param string courseId - Course ID
+         * @return JSONObject - returns a JSONObject confirming student was found; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        // GET VALUE BY ID
         [HttpGet("{studentId}/{courseId}")]
         public ActionResult<string> getStudents(string studentId, string courseId)
         {
@@ -99,10 +122,14 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-
+        /**
+         * Set/Edit student data. NOTE: UNABLE TO EDIT STUDENT ID
+         * @param CourseStudent moedl - database context
+         * @param string studentId - Student ID
+         * @param string courseId - Course ID
+         * @return JSONObject - returns a JSONObject confirming student information was changed; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //EDIT VALUES
-        //CANNOT EDIT STUDENT ID 
         [HttpPut("{studentId}/{courseId}")]
         public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] string courseId)
         {
@@ -110,8 +137,6 @@ namespace GroupGradingAPI.Controllers
             {
                 var courseStudent = _context.CourseStudents
                     .Where(c => c.StudentId == studentId && c.CourseId == courseId).FirstOrDefault();
-
-
 
                 courseStudent.CourseId = model.CourseId;
                 courseStudent.CourseCrn = model.CourseCrn;
@@ -130,8 +155,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /**
+         * Gets a list of all students in specified course.
+         * @return JSONObject - returns a list as a JSONObject of all students in specific course; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //GET ALL
         [HttpGet]
         public ActionResult<string> getCourseStudentData()
         {
@@ -156,4 +184,3 @@ namespace GroupGradingAPI.Controllers
         }
     }
 }
-

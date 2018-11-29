@@ -10,8 +10,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace GroupGradingAPI.Controllers
 {
     [Authorize(Roles = "Teacher")]
@@ -22,13 +20,20 @@ namespace GroupGradingAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly GradingContext _context;
 
+        /**
+         * EvaluationController
+         *
+         * Constructor
+         *
+         * @param GradingContext context - database context
+         * @param UserManager<IdentityUser> userManger - manages user identities
+         */
         public EvaluationController(GradingContext context, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
 
-        // CREATE VALUES
         /*
          *         [Key]
         public string EvaluationId { get; set; }
@@ -38,6 +43,11 @@ namespace GroupGradingAPI.Controllers
         public int CourseCrn { get; set; }
         public string CourseTerm { get; set; }
         public int CourseYear { get; set; }
+         */
+        /**
+         * Inserts a new evaluation into database
+         * @param Evaluation model - database context
+         * @return JSONObject - returns a JSONObject confirming successful evaluation; else returns an error
          */
         [EnableCors("AllAccessCors")]
         [HttpPost("create")]
@@ -63,7 +73,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        // DELETE VALUES
+        /**
+         * Deletes an evaluation from database
+         * @param string id - Evaluation ID
+         * @return JSONObject - returns a JSONObject confirming successful deletion; else returns an error
+         */
         [EnableCors("AllAccessCors")]
         [HttpPost("delete/{id}")]
         public ActionResult<string> deleteEvaluation(string id)
@@ -83,8 +97,12 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /**
+         * Gets an evaluation by ID
+         * @param string id - Evaluation ID
+         * @return JSONObject - returns a JSONObject of specified Evaluation; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        // GET VALUE BY ID
         [HttpGet("{id}")]
         public ActionResult<string> getEvaluations(string id)
         {
@@ -100,9 +118,13 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-
+        /**
+         * Edits specified evaluation
+         * @param Evaluation model - database context
+         * @param string id - Evaluation ID
+         * @return JSONObject - returns a JSONObject confirming successful changes; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //EDIT VALUES
         [HttpPut("{id}")]
         public ActionResult<string> seStudentData([FromBody] Evaluation model, [FromRoute] string id)
         {
@@ -111,14 +133,12 @@ namespace GroupGradingAPI.Controllers
                 var evaluation = _context.Evaluations
                     .Where(c => c.EvaluationId == id).FirstOrDefault();
 
-
                 evaluation.CourseCrn = model.CourseCrn;
                 evaluation.CourseTerm = model.CourseTerm;
                 evaluation.CourseYear = model.CourseYear;
                 evaluation.EvaluationId = model.EvaluationId;
                 evaluation.StudentGroupId = model.StudentGroupId;
 
-                
                 _context.Evaluations.Update(evaluation);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
@@ -130,8 +150,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /**
+         * Gets all existing evaluations from database
+         * @return JSONObject - returns a list of evaluations as a JSONObject; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //GET ALL
         [HttpGet]
         public ActionResult<string> getEvaluationData()
         {

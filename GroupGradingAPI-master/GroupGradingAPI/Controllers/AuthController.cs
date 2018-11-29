@@ -23,6 +23,15 @@ namespace GroupGradingAPI.Controllers
         private readonly IConfiguration _configuration;
         private readonly GradingContext _context;
 
+        /**
+         * AuthController
+         *
+         * Constructor
+         *
+         * @param GradingContext context - database context
+         * @param UserManager<IdentityUser> userManger - manages user identities
+         * @param IConfiguration configuration - key/value configuration properties
+         */
         public AuthController(GradingContext context, UserManager<IdentityUser> userManager, IConfiguration configuration)
         {
             _userManager = userManager;
@@ -30,6 +39,12 @@ namespace GroupGradingAPI.Controllers
             _context = context;
         }
 
+        /**
+         * Inserts a NEW teacher into database.
+         * @param RegistationModel model - database context
+         * @return Ok - returns Ok if user inputs all the correct information
+         * @return BadRequest - returns when the information is duplicated or when registration is unsuccessful
+         */
         [HttpPost("teacher/register")]
         public async Task<ActionResult> InsertTeacher([FromBody] RegistationModel model)
         {
@@ -72,6 +87,12 @@ namespace GroupGradingAPI.Controllers
             }
         }
 
+        /**
+         * Inserts a NEW student into database.
+         * @param RegistationModel model - database context
+         * @return Ok - returns Ok if user inputs all the correct information
+         * @return BadRequest - returns when the information is duplicated or when registration is unsuccessful
+         */
         [HttpPost("student/register")]
         public async Task<ActionResult> InsertStudent([FromBody] RegistationModel model)
         {
@@ -114,6 +135,12 @@ namespace GroupGradingAPI.Controllers
             }
         }
 
+        /**
+         * Login for an existing user.
+         * @param CredentialsModel model - database context
+         * @return Unauthorized - returns unauthorized if username and/or password is incorrect
+         * @return Ok - returns a new token if the username AND password is correct and exist
+         */
         [HttpPost("login")]
         public async Task<ActionResult> Login(CredentialsModel model)
         {
