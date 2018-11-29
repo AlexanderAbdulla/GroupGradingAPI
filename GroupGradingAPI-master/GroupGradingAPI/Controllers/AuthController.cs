@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -126,12 +125,10 @@ namespace GroupGradingAPI.Controllers
                 };
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claim, "Token");
                 var userRoles = await _userManager.GetRolesAsync(user);
-
                 foreach (var role in userRoles)
                 {
-                    claimsIdentity.AddClaim(new Claim(ClaimTypes.Role, role));
+                    claimsIdentity.AddClaim(new Claim("roles", role));
                 }
-
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]));
 
@@ -149,7 +146,6 @@ namespace GroupGradingAPI.Controllers
                   new
                   {
                       token = new JwtSecurityTokenHandler().WriteToken(token),
-                      role = userRoles.Single(),
                       expiration = token.ValidTo
                   });
             }
