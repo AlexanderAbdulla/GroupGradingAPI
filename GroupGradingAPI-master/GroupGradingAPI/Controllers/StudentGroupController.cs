@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentGroupController : ControllerBase
@@ -81,7 +81,7 @@ namespace GroupGradingAPI.Controllers
         {
             try
             {
-                var studentGroup = _context.StudentGroup.Where(c => c.EvaluationId == id).FirstOrDefault();
+                var studentGroup = _context.StudentGroup.Where(c => c.GroupName == id).FirstOrDefault();
                 return JsonConvert.SerializeObject(studentGroup);
             }
             catch (Exception e)
@@ -95,12 +95,18 @@ namespace GroupGradingAPI.Controllers
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
         [HttpPut("{id}")]
-        public ActionResult<string> seStudentData([FromBody] StudentGroup model, [FromRoute] string id)
+        public ActionResult<string> setStudentData([FromBody] StudentGroup model, [FromRoute] string id)
         {
             try
             {
                 var studentGroup = _context.StudentGroup
                     .Where(c => c.GroupName == id).FirstOrDefault();
+
+                studentGroup.CourseId = model.CourseId;
+                studentGroup.EvaluationId = model.EvaluationId;
+               
+                studentGroup.StudentId = model.StudentId;
+              
                 
                 _context.StudentGroup.Update(studentGroup);
                 _context.SaveChanges();

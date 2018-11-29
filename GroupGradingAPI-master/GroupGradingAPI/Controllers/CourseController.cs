@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : Controller
@@ -91,7 +91,7 @@ namespace GroupGradingAPI.Controllers
         [EnableCors("AllAccessCors")]
         //EDIT VALUES
         [HttpPut("{id}")]
-        public ActionResult<string> setCourseData([FromBody] SetCourseViewModel model, [FromRoute] int id)
+        public ActionResult<string> setCourseData([FromBody] Course model, [FromRoute] int id)
         {
             try
             {
@@ -99,6 +99,7 @@ namespace GroupGradingAPI.Controllers
                 course.CourseName = model.CourseName;
                 course.CourseTerm = model.CourseTerm;
                 course.CourseYear = model.CourseYear;
+                course.InstructorId = model.InstructorId;
                 _context.Courses.Update(course);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
@@ -114,7 +115,6 @@ namespace GroupGradingAPI.Controllers
         /// Shows all current courses within the database.
         /// </summary>
         [EnableCors("AllAccessCors")]
-        //GET ALL
         [HttpGet]
         public ActionResult<string> getCourseData()
         {
@@ -129,7 +129,7 @@ namespace GroupGradingAPI.Controllers
                 {
 
                 }
-                return JsonConvert.SerializeObject("Error");
+                return JsonConvert.SerializeObject("error");
             }
             catch (Exception e)
             {

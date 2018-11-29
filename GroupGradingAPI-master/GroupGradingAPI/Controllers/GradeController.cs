@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class GradeController : ControllerBase
@@ -51,12 +51,12 @@ namespace GroupGradingAPI.Controllers
 
         // DELETE VALUES
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{gradeId}/{studentId}")]
-        public ActionResult<string> deleteEvaluation(string gradeId, string studentId)
+        [HttpPost("delete/{gradeId}")]
+        public ActionResult<string> deleteEvaluation(string gradeId)
         {
             try
             {
-                var grade = _context.Grades.Where(c => c.GradeId == gradeId && c.StudentId == studentId).FirstOrDefault();
+                var grade = _context.Grades.Where(c => c.GradeId == gradeId).FirstOrDefault();
 
                 _context.Grades.Remove(grade);
                 _context.SaveChanges();
@@ -71,12 +71,12 @@ namespace GroupGradingAPI.Controllers
 
         [EnableCors("AllAccessCors")]
         // GET VALUE BY ID
-        [HttpGet("{gradeId}/{studentId}")]
-        public ActionResult<string> getEvaluations(string gradeId, string studentId)
+        [HttpGet("{gradeId}")]
+        public ActionResult<string> getEvaluations(string gradeId)
         {
             try
             {
-                var grade = _context.Grades.Where(c => c.GradeId == gradeId && c.StudentId == studentId).FirstOrDefault();
+                var grade = _context.Grades.Where(c => c.GradeId == gradeId).FirstOrDefault();
                 return JsonConvert.SerializeObject(grade);
             }
             catch (Exception e)
@@ -97,7 +97,10 @@ namespace GroupGradingAPI.Controllers
                 var grade = _context.Grades
                     .Where(c => c.GradeId == id).FirstOrDefault();
 
-               
+                grade.GradeId = model.GradeId;
+                grade.Percentage = model.Percentage;
+                grade.StudentId = model.StudentId;
+
                 _context.Grades.Update(grade);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
