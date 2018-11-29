@@ -149,6 +149,7 @@ namespace GroupGradingAPI.Controllers
                   new
                   {
                       token = new JwtSecurityTokenHandler().WriteToken(token),
+                      role = userRoles.Single(),
                       expiration = token.ValidTo
                   });
             }
