@@ -48,28 +48,22 @@ namespace GroupGradingAPI.Controllers
             try
             {
                 Guid newGuid = Guid.NewGuid();
-                var user = new IdentityUser
+                var user = new Instructor
                 {
                     Email = model.Email,
                     UserName = model.UserName,
-                    SecurityStamp = newGuid.ToString(),
-                };
-                var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "Teacher");
-                }
-
-                Instructor instructor = new Instructor {
-                    Email = model.Email,
-                    Password = model.Password,
                     FirstName = model.FirstName,
                     LastName = model.LastName,
-                    InstructorId = user.Id,
+                    SecurityStamp = newGuid.ToString(),
                     InstructorRoleId = "Teacher"
                 };
+                var result = await _userManager.CreateAsync(user, model.Password);
+                if (!result.Succeeded)
+                {
+                    return BadRequest(result.Errors);
+                }
 
-                await _context.Instructors.AddAsync(instructor);
+                await _userManager.AddToRoleAsync(user, "Teacher");
                 await _context.SaveChangesAsync();
                 return Ok(new { Username = user.UserName, response = true });
             }
@@ -96,26 +90,22 @@ namespace GroupGradingAPI.Controllers
             try
             {
                 Guid newGuid = Guid.NewGuid();
-                var user = new IdentityUser
+                var user = new Student
                 {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
                     Email = model.Email,
                     UserName = model.UserName,
                     SecurityStamp = newGuid.ToString(),
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "Student");
+                    return BadRequest(result.Errors);
+
                 }
 
-                Student student = new Student {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    StudentId = user.Id,
-                    Email = model.Email
-                };
-
-                await _context.Students.AddAsync(student);
+                await _userManager.AddToRoleAsync(user, "Student");
                 await _context.SaveChangesAsync();
                 return Ok(new { Username = user.UserName, response = true });
             }
