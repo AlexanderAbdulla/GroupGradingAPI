@@ -130,9 +130,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "1", ConcurrencyStamp = "c8496eeb-bd20-4601-a7d7-ff037ef6f977", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "5eff8d3b-6a6e-444a-9850-ed70b40ff703", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "1d9e3695-0080-4080-80dc-adf917f49b35", Name = "Student", NormalizedName = "STUDENT" }
+                        new { Id = "1", ConcurrencyStamp = "ee30f9fb-e4ac-4087-8277-7944827fa332", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "d9890224-c955-45f3-95a7-027b9149bf07", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "9ede7aa0-f94b-4f27-b919-6585a47bf997", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 
@@ -297,7 +297,7 @@ namespace GroupGradingAPI.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("CourseId");
+                    b.Property<string>("CourseCrn");
 
                     b.Property<string>("FirstName")
                         .HasColumnName("Student_FirstName");
