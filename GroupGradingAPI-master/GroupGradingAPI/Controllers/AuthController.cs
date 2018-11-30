@@ -142,6 +142,10 @@ namespace GroupGradingAPI.Controllers
          * @return Unauthorized - returns unauthorized if username and/or password is incorrect
          * @return Ok - returns a new token if the username AND password is correct and exist
          */
+         ///
+         /// <summary>
+         /// Logs a user in
+         /// </summary>
         [HttpPost("login")]
         public async Task<ActionResult> Login(CredentialsModel model)
         {
@@ -173,7 +177,7 @@ namespace GroupGradingAPI.Controllers
                 return Ok(
                   new
                   {
-
+                      uId = user.Id,
                       token = new JwtSecurityTokenHandler().WriteToken(token),
                       expiration = token.ValidTo
                   });
