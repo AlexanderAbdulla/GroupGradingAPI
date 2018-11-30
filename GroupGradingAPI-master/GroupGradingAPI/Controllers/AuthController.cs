@@ -161,6 +161,7 @@ namespace GroupGradingAPI.Controllers
                 {
                     claimsIdentity.AddClaim(new Claim("roles", role));
                 }
+                claimsIdentity.AddClaim(new Claim("uid", user.Id));
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]));
 
