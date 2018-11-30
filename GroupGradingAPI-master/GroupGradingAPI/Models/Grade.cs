@@ -10,7 +10,6 @@ namespace GroupGradingAPI.Models
     {
         [Key]
         public string GradeId { get; set; }
-        public int CourseCrn { get; set; }
         public string StudentId { get; set; }
         public double Percentage { get; set; }
     }

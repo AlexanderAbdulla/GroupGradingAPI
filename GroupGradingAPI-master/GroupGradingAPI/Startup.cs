@@ -109,7 +109,7 @@ namespace GroupGradingAPI
             app.Run(async c => {
                 c.Response.Redirect("swagger");
             });
-            DummyData.Initialize(app);
+            //DummyData.Initialize(app);
         }
     }
 }

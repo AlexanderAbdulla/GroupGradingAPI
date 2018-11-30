@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace GroupGradingAPI.Controllers
 {
     [EnableCors("AllAccessCors")]
+    [Route("api")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -141,6 +142,10 @@ namespace GroupGradingAPI.Controllers
          * @return Unauthorized - returns unauthorized if username and/or password is incorrect
          * @return Ok - returns a new token if the username AND password is correct and exist
          */
+         ///
+         /// <summary>
+         /// Logs a user in
+         /// </summary>
         [HttpPost("login")]
         public async Task<ActionResult> Login(CredentialsModel model)
         {
@@ -156,6 +161,7 @@ namespace GroupGradingAPI.Controllers
                 {
                     claimsIdentity.AddClaim(new Claim("roles", role));
                 }
+                claimsIdentity.AddClaim(new Claim("uid", user.Id));
                 var signinKey = new SymmetricSecurityKey(
                   Encoding.UTF8.GetBytes(_configuration["Jwt:SigningKey"]));
 
@@ -172,6 +178,7 @@ namespace GroupGradingAPI.Controllers
                 return Ok(
                   new
                   {
+                      uId = user.Id,
                       token = new JwtSecurityTokenHandler().WriteToken(token),
                       expiration = token.ValidTo
                   });

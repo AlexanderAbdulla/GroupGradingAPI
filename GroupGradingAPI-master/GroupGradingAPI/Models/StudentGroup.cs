@@ -13,5 +13,7 @@ namespace GroupGradingAPI.Models
         public string EvaluationId { get; set; }
         public string StudentId { get; set; }
         public string CourseId { get; set; }
+        public int CourseCrn { get; set; }
+        public List<CourseStudent> Students { get; set; }
     }
 }

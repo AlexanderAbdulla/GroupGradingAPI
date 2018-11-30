@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupGradingAPI.Migrations
 {
     [DbContext(typeof(GradingContext))]
-    [Migration("20181129012913_SecondMigration")]
-    partial class SecondMigration
+    [Migration("20181130053855_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,6 +70,8 @@ namespace GroupGradingAPI.Migrations
                     b.Property<int>("CourseYear");
 
                     b.Property<string>("StudentGroupId");
+
+                    b.Property<string>("StudentID");
 
                     b.HasKey("EvaluationId");
 
@@ -130,9 +132,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "1", ConcurrencyStamp = "01e58ca7-48d1-4503-a17c-600023eac31e", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "6c0ad003-7312-4965-bed3-3faab4cce523", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "e3e9fc76-9c5e-4eb9-a6ca-0eb675a48107", Name = "Student", NormalizedName = "STUDENT" }
+                        new { Id = "1", ConcurrencyStamp = "ee30f9fb-e4ac-4087-8277-7944827fa332", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "d9890224-c955-45f3-95a7-027b9149bf07", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "9ede7aa0-f94b-4f27-b919-6585a47bf997", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 
@@ -297,7 +299,7 @@ namespace GroupGradingAPI.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("CourseId");
+                    b.Property<string>("CourseCrn");
 
                     b.Property<string>("FirstName")
                         .HasColumnName("Student_FirstName");
