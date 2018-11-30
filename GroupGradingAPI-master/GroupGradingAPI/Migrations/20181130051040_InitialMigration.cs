@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GroupGradingAPI.Migrations
 {
-    public partial class wow : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -237,17 +237,17 @@ namespace GroupGradingAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "b84d13be-a2e0-41e3-87ac-c7ba84cccb8b", "Admin", "ADMIN" });
+                values: new object[] { "1", "c8496eeb-bd20-4601-a7d7-ff037ef6f977", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2", "12261230-bfc9-4c50-8642-e3b98689be7a", "Teacher", "TEACHER" });
+                values: new object[] { "2", "5eff8d3b-6a6e-444a-9850-ed70b40ff703", "Teacher", "TEACHER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3", "852264eb-2fb1-4d8e-ace2-286d0a2d068a", "Student", "STUDENT" });
+                values: new object[] { "3", "1d9e3695-0080-4080-80dc-adf917f49b35", "Student", "STUDENT" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
