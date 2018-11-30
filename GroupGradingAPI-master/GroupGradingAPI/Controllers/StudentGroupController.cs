@@ -22,14 +22,25 @@ namespace GroupGradingAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly GradingContext _context;
 
+        /**
+         * StudentGroupController
+         *
+         * Constructor
+         *
+         * @param GradingContext context - database context
+         * @param UserManager<IdentityUser> userManger - manages user identities
+         */
         public StudentGroupController(GradingContext context, UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
             _context = context;
         }
 
-        // CREATE VALUES
-        
+        /**
+         * Inserts a new evaluton for student Groups into database
+         * @param StudentGroup model - database context
+         * @return JSONObject - returns a JSONObject confirming creation of a new evaluation; else returns an error
+         */
         [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createEvaluation([FromBody] StudentGroup model)
@@ -54,7 +65,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        // DELETE VALUES
+        /**
+         * Deletes a group from database
+         * @param string id - Group ID
+         * @return JSONObject - returns a JSONObject confirming deletion of a group; else returns an error
+         */
         [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteStudentGroup(string id)
@@ -74,8 +89,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        [EnableCors("AllAccessCors")]
-        // GET VALUE BY ID
+        /**
+         * Gets a group's evaluation by group ID
+         * @param string id - group ID
+         * @return JSONObject - returns a JSONObject of specified group; else returns an error
+         */        [EnableCors("AllAccessCors")]
         [HttpGet("{id}")]
         public ActionResult<string> getEvaluations(string id)
         {
@@ -91,9 +109,13 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-
+        /**
+         * Edits specified group
+         * @param StudentGroup model - database context
+         * @param string id - group ID
+         * @return JSONObject - returns a JSONObject confirming successful changes; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //EDIT VALUES
         [HttpPut("{id}")]
         public ActionResult<string> setStudentData([FromBody] StudentGroup model, [FromRoute] string id)
         {
@@ -104,10 +126,10 @@ namespace GroupGradingAPI.Controllers
 
                 studentGroup.CourseId = model.CourseId;
                 studentGroup.EvaluationId = model.EvaluationId;
-               
+
                 studentGroup.StudentId = model.StudentId;
-              
-                
+
+
                 _context.StudentGroup.Update(studentGroup);
                 _context.SaveChanges();
                 return JsonConvert.SerializeObject("Success");
@@ -119,8 +141,11 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
+        /**
+         * Gets all existing evaluations for Groups from database
+         * @return JSONObject - returns a list of evaluations as a JSONObject; else returns an error
+         */
         [EnableCors("AllAccessCors")]
-        //GET ALL
         [HttpGet]
         public ActionResult<string> getEvaluationData()
         {
