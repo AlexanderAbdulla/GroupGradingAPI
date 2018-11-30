@@ -69,7 +69,7 @@ namespace GroupGradingAPI.Data
             {
               new Evaluation
               {
-                  StudentGroupId="groupthese", CourseCrn=1234,CourseTerm="CourseThing", CourseYear=2017
+                  StudentGroupId="groupthese", CourseCrn=1234,CourseTerm="CourseThing", CourseYear=2017, StudentID ="a0012345"
               }
             };
             return _evaluation;

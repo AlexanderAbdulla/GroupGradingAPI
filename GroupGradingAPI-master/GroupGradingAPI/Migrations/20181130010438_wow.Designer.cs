@@ -4,14 +4,16 @@ using GroupGradingAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupGradingAPI.Migrations
 {
     [DbContext(typeof(GradingContext))]
-    partial class GradingContextModelSnapshot : ModelSnapshot
+    [Migration("20181130010438_wow")]
+    partial class wow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -130,11 +132,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-
-                        new { Id = "1", ConcurrencyStamp = "372d15e2-b09a-4f4d-ae28-d9b8883ec8e4", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "dcebf21a-2abf-4870-87fe-6dc2af0efa14", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "5f57848a-af12-4b70-9bfe-de5df0f0c3c5", Name = "Student", NormalizedName = "STUDENT" }
-
+                        new { Id = "1", ConcurrencyStamp = "b84d13be-a2e0-41e3-87ac-c7ba84cccb8b", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "12261230-bfc9-4c50-8642-e3b98689be7a", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "852264eb-2fb1-4d8e-ace2-286d0a2d068a", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 
@@ -299,7 +299,7 @@ namespace GroupGradingAPI.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("CourseCrn");
+                    b.Property<string>("CourseId");
 
                     b.Property<string>("FirstName")
                         .HasColumnName("Student_FirstName");

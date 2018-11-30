@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace GroupGradingAPI.Controllers
 {
     [EnableCors("AllAccessCors")]
+    [Route("api")]
     [ApiController]
     public class AuthController : Controller
     {
