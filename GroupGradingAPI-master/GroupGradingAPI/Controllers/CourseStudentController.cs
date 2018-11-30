@@ -64,7 +64,7 @@ namespace GroupGradingAPI.Controllers
 
         // DELETE VALUES
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{studentId}/{courseId}")]
+        [HttpDelete("delete/{studentId}/{courseId}")]
         public ActionResult<string> deleteCourseStudent(string studentId, string courseId)
         {
             try

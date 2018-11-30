@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Teacher, Student")]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : Controller
@@ -52,7 +52,7 @@ namespace GroupGradingAPI.Controllers
 
         // DELETE VALUES
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteCourse(int id)
         {
             try
@@ -127,13 +127,13 @@ namespace GroupGradingAPI.Controllers
                 }
                 catch (Exception e)
                 {
-
+                    //
                 }
                 return JsonConvert.SerializeObject("error");
             }
             catch (Exception e)
             {
-
+                //
             }
             return JsonConvert.SerializeObject("Error");
         }
