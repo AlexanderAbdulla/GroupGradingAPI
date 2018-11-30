@@ -130,11 +130,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-
-                        new { Id = "1", ConcurrencyStamp = "372d15e2-b09a-4f4d-ae28-d9b8883ec8e4", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "dcebf21a-2abf-4870-87fe-6dc2af0efa14", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "5f57848a-af12-4b70-9bfe-de5df0f0c3c5", Name = "Student", NormalizedName = "STUDENT" }
-
+                        new { Id = "1", ConcurrencyStamp = "ee30f9fb-e4ac-4087-8277-7944827fa332", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "d9890224-c955-45f3-95a7-027b9149bf07", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "9ede7aa0-f94b-4f27-b919-6585a47bf997", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 

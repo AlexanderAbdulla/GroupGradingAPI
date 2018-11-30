@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentGroupController : ControllerBase
