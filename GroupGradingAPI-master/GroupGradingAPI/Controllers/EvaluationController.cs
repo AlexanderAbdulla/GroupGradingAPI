@@ -61,6 +61,7 @@ namespace GroupGradingAPI.Controllers
                 newEvaluation.CourseYear = model.CourseYear;
                 newEvaluation.EvaluationId = model.EvaluationId;
                 newEvaluation.StudentGroupId = model.StudentGroupId;
+                newEvaluation.StudentID = model.StudentID;
 
                 _context.Evaluations.Add(newEvaluation);
                 _context.SaveChanges();
@@ -138,6 +139,7 @@ namespace GroupGradingAPI.Controllers
                 evaluation.CourseYear = model.CourseYear;
                 evaluation.EvaluationId = model.EvaluationId;
                 evaluation.StudentGroupId = model.StudentGroupId;
+                evaluation.StudentID = model.StudentID;
 
                 _context.Evaluations.Update(evaluation);
                 _context.SaveChanges();

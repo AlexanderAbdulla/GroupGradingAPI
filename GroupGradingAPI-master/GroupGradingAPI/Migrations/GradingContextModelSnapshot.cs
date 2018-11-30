@@ -69,6 +69,8 @@ namespace GroupGradingAPI.Migrations
 
                     b.Property<string>("StudentGroupId");
 
+                    b.Property<string>("StudentID");
+
                     b.HasKey("EvaluationId");
 
                     b.ToTable("Evaluations");
@@ -128,9 +130,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "1", ConcurrencyStamp = "01e58ca7-48d1-4503-a17c-600023eac31e", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "6c0ad003-7312-4965-bed3-3faab4cce523", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "e3e9fc76-9c5e-4eb9-a6ca-0eb675a48107", Name = "Student", NormalizedName = "STUDENT" }
+                        new { Id = "1", ConcurrencyStamp = "b84d13be-a2e0-41e3-87ac-c7ba84cccb8b", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "12261230-bfc9-4c50-8642-e3b98689be7a", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "852264eb-2fb1-4d8e-ace2-286d0a2d068a", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 
