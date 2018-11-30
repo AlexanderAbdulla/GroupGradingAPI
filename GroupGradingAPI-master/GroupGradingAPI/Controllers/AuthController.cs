@@ -16,6 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 namespace GroupGradingAPI.Controllers
 {
     [EnableCors("AllAccessCors")]
+    [Route("api")]
     [ApiController]
     public class AuthController : Controller
     {
@@ -172,6 +173,7 @@ namespace GroupGradingAPI.Controllers
                 return Ok(
                   new
                   {
+
                       token = new JwtSecurityTokenHandler().WriteToken(token),
                       expiration = token.ValidTo
                   });

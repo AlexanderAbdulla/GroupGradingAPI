@@ -71,7 +71,7 @@ namespace GroupGradingAPI.Controllers
          * @return JSONObject - returns a JSONObject confirming deletion of a group; else returns an error
          */
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{id}")]
+        [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteStudentGroup(string id)
         {
             try

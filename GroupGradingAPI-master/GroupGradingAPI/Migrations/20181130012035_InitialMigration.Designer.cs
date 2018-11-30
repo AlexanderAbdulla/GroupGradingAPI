@@ -4,14 +4,16 @@ using GroupGradingAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GroupGradingAPI.Migrations
 {
     [DbContext(typeof(GradingContext))]
-    partial class GradingContextModelSnapshot : ModelSnapshot
+    [Migration("20181130012035_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,8 +70,6 @@ namespace GroupGradingAPI.Migrations
                     b.Property<int>("CourseYear");
 
                     b.Property<string>("StudentGroupId");
-
-                    b.Property<string>("StudentID");
 
                     b.HasKey("EvaluationId");
 
@@ -130,11 +130,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-
                         new { Id = "1", ConcurrencyStamp = "372d15e2-b09a-4f4d-ae28-d9b8883ec8e4", Name = "Admin", NormalizedName = "ADMIN" },
                         new { Id = "2", ConcurrencyStamp = "dcebf21a-2abf-4870-87fe-6dc2af0efa14", Name = "Teacher", NormalizedName = "TEACHER" },
                         new { Id = "3", ConcurrencyStamp = "5f57848a-af12-4b70-9bfe-de5df0f0c3c5", Name = "Student", NormalizedName = "STUDENT" }
-
                     );
                 });
 

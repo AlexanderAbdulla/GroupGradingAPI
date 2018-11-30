@@ -67,7 +67,7 @@ namespace GroupGradingAPI.Controllers
          * @return JSONObject - returns a JSONObject confirming deletion of a grade; else returns an error
          */
         [EnableCors("AllAccessCors")]
-        [HttpPost("delete/{gradeId}")]
+        [HttpDelete("delete/{gradeId}")]
         public ActionResult<string> deleteEvaluation(string gradeId)
         {
             try
