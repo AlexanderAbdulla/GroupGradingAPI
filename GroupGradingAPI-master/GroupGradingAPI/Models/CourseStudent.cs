@@ -10,11 +10,8 @@ namespace GroupGradingAPI.Models
     {
         [Key]
         public string StudentId { get; set; }
-
         public string CourseId { get; set; }
-
-
-        public int CourseCrn { get; set; }
+        //public int CourseCrn { get; set; }
         public string CourseTerm { get; set; }
         public int Courseyear { get; set; }
 

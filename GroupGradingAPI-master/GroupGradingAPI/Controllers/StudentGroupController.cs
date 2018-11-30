@@ -168,5 +168,55 @@ namespace GroupGradingAPI.Controllers
             }
             return JsonConvert.SerializeObject("Error");
         }
+
+        [EnableCors("AllAccessCors")]
+        [HttpGet]
+        [Route("studentgroup/i/{CourseCrn}")]
+        public ActionResult<string> getGroupByCourseForInstructors(int CourseCrn)
+        {
+            try
+            {
+                try
+                {
+                    var studentGroups = _context.StudentGroup.ToList();
+                    return JsonConvert.SerializeObject(studentGroups);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        [HttpGet]
+        [Route("studentgroup/i/s/{CourseCrn}")]
+        public ActionResult<string> getGroupByCourseForInstructorsStudent(int CourseCrn)
+        {
+            try
+            {
+                try
+                {
+                    var studentGroups = _context.StudentGroup.ToList();
+                    return JsonConvert.SerializeObject(studentGroups);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
     }
 }
