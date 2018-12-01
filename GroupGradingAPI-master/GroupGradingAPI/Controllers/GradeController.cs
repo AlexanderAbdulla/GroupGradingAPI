@@ -12,7 +12,8 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [EnableCors("AllAccessCors")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GradeController : ControllerBase
@@ -39,7 +40,6 @@ namespace GroupGradingAPI.Controllers
          * @param Grade model - database context
          * @return JSONObject - returns a JSONObject confirming creation of a new grade; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createEvaluation([FromBody] Grade model)
         {
@@ -66,7 +66,6 @@ namespace GroupGradingAPI.Controllers
          * @param string gradeId - Grade ID
          * @return JSONObject - returns a JSONObject confirming deletion of a grade; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{gradeId}")]
         public ActionResult<string> deleteEvaluation(string gradeId)
         {
@@ -90,7 +89,6 @@ namespace GroupGradingAPI.Controllers
          * @param string gradeId - Grade ID
          * @return JSONObject - returns a JSONObject of specified Grade; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet("{gradeId}")]
         public ActionResult<string> getEvaluations(string gradeId)
         {
@@ -112,7 +110,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - Grade ID
          * @return JSONObject - returns a JSONObject confirming successful changes; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPut("{id}")]
         public ActionResult<string> seStudentData([FromBody] Grade model, [FromRoute] string id)
         {
@@ -140,7 +137,6 @@ namespace GroupGradingAPI.Controllers
          * Gets all existing Grades from database
          * @return JSONObject - returns a list of grades as a JSONObject; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         public ActionResult<string> getGradeData()
         {

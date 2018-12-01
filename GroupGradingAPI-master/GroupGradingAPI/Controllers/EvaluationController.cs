@@ -12,7 +12,8 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [EnableCors("AllAccessCors")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class EvaluationController : ControllerBase
@@ -49,7 +50,6 @@ namespace GroupGradingAPI.Controllers
          * @param Evaluation model - database context
          * @return JSONObject - returns a JSONObject confirming successful evaluation; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createEvaluation([FromBody] Evaluation model)
         {
@@ -79,7 +79,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - Evaluation ID
          * @return JSONObject - returns a JSONObject confirming successful deletion; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteEvaluation(string id)
         {
@@ -103,7 +102,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - Evaluation ID
          * @return JSONObject - returns a JSONObject of specified Evaluation; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet("{id}")]
         public ActionResult<string> getEvaluations(string id)
         {
@@ -125,7 +123,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - Evaluation ID
          * @return JSONObject - returns a JSONObject confirming successful changes; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPut("{id}")]
         public ActionResult<string> seStudentData([FromBody] Evaluation model, [FromRoute] string id)
         {
@@ -156,7 +153,6 @@ namespace GroupGradingAPI.Controllers
          * Gets all existing evaluations from database
          * @return JSONObject - returns a list of evaluations as a JSONObject; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         public ActionResult<string> getEvaluationData()
         {

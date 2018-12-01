@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace GroupGradingAPI.Controllers
 {
+    [EnableCors("AllAccessCors")]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -50,7 +51,6 @@ namespace GroupGradingAPI.Controllers
          * @param CourseStudent model - database context
          * @return JSONObject - returns a JSONObject confirming student enrollment; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createCourseStudent([FromBody] CourseStudent model)
         {
@@ -78,7 +78,6 @@ namespace GroupGradingAPI.Controllers
          * @param string courseId - Course ID
          * @return JSONObject - returns a JSONObject confirming student removal; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{studentId}/{courseCrn}")]
         public ActionResult<string> deleteCourseStudent(string studentId, int courseCrn)
         {
@@ -103,7 +102,6 @@ namespace GroupGradingAPI.Controllers
          * @param string courseId - Course ID
          * @return JSONObject - returns a JSONObject confirming student was found; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet("{studentId}/{courseCrn}")]
         public ActionResult<string> getStudents(string studentId, int courseCrn)
         {
@@ -126,7 +124,6 @@ namespace GroupGradingAPI.Controllers
          * @param string courseId - Course ID
          * @return JSONObject - returns a JSONObject confirming student information was changed; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPut("{studentId}/{courseCrn}")]
         public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] int courseCrn)
         {
@@ -153,7 +150,6 @@ namespace GroupGradingAPI.Controllers
          * Gets a list of all students in specified course.
          * @return JSONObject - returns a list as a JSONObject of all students in specific course; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         public ActionResult<string> getCourseStudentData()
         {

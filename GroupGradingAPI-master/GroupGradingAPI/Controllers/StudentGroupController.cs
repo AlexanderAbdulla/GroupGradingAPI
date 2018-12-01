@@ -14,6 +14,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
+    [EnableCors("AllAccessCors")]
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -41,7 +42,6 @@ namespace GroupGradingAPI.Controllers
          * @param StudentGroup model - database context
          * @return JSONObject - returns a JSONObject confirming creation of a new evaluation; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createEvaluation([FromBody] StudentGroup model)
         {
@@ -70,7 +70,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - Group ID
          * @return JSONObject - returns a JSONObject confirming deletion of a group; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteStudentGroup(string id)
         {
@@ -93,7 +92,7 @@ namespace GroupGradingAPI.Controllers
          * Gets a group's evaluation by group ID
          * @param string id - group ID
          * @return JSONObject - returns a JSONObject of specified group; else returns an error
-         */        [EnableCors("AllAccessCors")]
+         */
         [HttpGet("{id}")]
         public ActionResult<string> getEvaluations(string id)
         {
@@ -115,7 +114,6 @@ namespace GroupGradingAPI.Controllers
          * @param string id - group ID
          * @return JSONObject - returns a JSONObject confirming successful changes; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpPut("{id}")]
         public ActionResult<string> setStudentData([FromBody] StudentGroup model, [FromRoute] string id)
         {
@@ -145,7 +143,6 @@ namespace GroupGradingAPI.Controllers
          * Gets all existing evaluations for Groups from database
          * @return JSONObject - returns a list of evaluations as a JSONObject; else returns an error
          */
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         public ActionResult<string> getEvaluationData()
         {
@@ -169,7 +166,6 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         [Route("studentgroup/i/{CourseCrn}")]
         public ActionResult<string> getStudentGroupsByCourse(int CourseCrn)
@@ -194,7 +190,6 @@ namespace GroupGradingAPI.Controllers
             return JsonConvert.SerializeObject("Error");
         }
 
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         [Route("studentgroup/i/s/{CourseCrn}")]
         public ActionResult<string> getStudentGroupsWithStudentListByCourse(int CourseCrn)
