@@ -204,7 +204,7 @@ namespace GroupGradingAPI.Controllers
                 try
                 {
                     var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
-                    var studetnList = _context.Students.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
+                    var studetnList = _context.CourseStudents.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
                     return JsonConvert.SerializeObject(studentGroups);
                 }
                 catch (Exception e)
