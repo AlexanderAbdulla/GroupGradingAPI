@@ -9,7 +9,7 @@ namespace GroupGradingAPI.Models
 {
     public class Student : IdentityUser
     {
-        public string CourseCrn { get; set; }
+        public int CourseCrn { get; set; }
         public string LastName { get; set; }
         public string FirstName { get; set; }
     }
