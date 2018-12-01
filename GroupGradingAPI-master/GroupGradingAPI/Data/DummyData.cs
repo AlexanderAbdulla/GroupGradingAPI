@@ -57,7 +57,7 @@ namespace GroupGradingAPI.Data
             {
               new CourseStudent
               {
-                  CourseId="testest", CourseCrn=1234,CourseTerm="CourseThing", Courseyear=2017
+                  CourseTerm="CourseThing", Courseyear=2017
               }
             };
             return _courses;
