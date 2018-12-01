@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentGroupController : ControllerBase
@@ -154,6 +154,57 @@ namespace GroupGradingAPI.Controllers
                 try
                 {
                     var studentGroups = _context.StudentGroup.ToList();
+                    return JsonConvert.SerializeObject(studentGroups);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        [HttpGet]
+        [Route("studentgroup/i/{CourseCrn}")]
+        public ActionResult<string> getStudentGroupsByCourse(int CourseCrn)
+        {
+            try
+            {
+                try
+                {
+                    var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
+                    return JsonConvert.SerializeObject(studentGroups);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        [HttpGet]
+        [Route("studentgroup/i/s/{CourseCrn}")]
+        public ActionResult<string> getStudentGroupsWithStudentListByCourse(int CourseCrn)
+        {
+            try
+            {
+                try
+                {
+                    var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
+                    var studetnList = _context.CourseStudents.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
                     return JsonConvert.SerializeObject(studentGroups);
                 }
                 catch (Exception e)

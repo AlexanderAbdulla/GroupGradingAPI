@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseStudentController
@@ -59,7 +58,6 @@ namespace GroupGradingAPI.Controllers
             {
                 CourseStudent newCourseStudent = new CourseStudent();
                 newCourseStudent.StudentId = model.StudentId;
-                newCourseStudent.CourseId = model.CourseId;
                 newCourseStudent.CourseCrn = model.CourseCrn;
                 newCourseStudent.CourseTerm = model.CourseTerm;
                 newCourseStudent.Courseyear = model.Courseyear;
@@ -70,9 +68,8 @@ namespace GroupGradingAPI.Controllers
             }
             catch (Exception e)
             {
-
+                return JsonConvert.SerializeObject(e.Message);
             }
-            return JsonConvert.SerializeObject("Error");
         }
 
         /**
@@ -82,12 +79,12 @@ namespace GroupGradingAPI.Controllers
          * @return JSONObject - returns a JSONObject confirming student removal; else returns an error
          */
         [EnableCors("AllAccessCors")]
-        [HttpDelete("delete/{studentId}/{courseId}")]
-        public ActionResult<string> deleteCourseStudent(string studentId, string courseId)
+        [HttpDelete("delete/{studentId}/{courseCrn}")]
+        public ActionResult<string> deleteCourseStudent(string studentId, int courseCrn)
         {
             try
             {
-                var courseStudent = _context.CourseStudents.Where(c => c.StudentId == studentId && c.CourseId == courseId).FirstOrDefault();
+                var courseStudent = _context.CourseStudents.Where(c => c.StudentId == studentId && c.CourseCrn == courseCrn).FirstOrDefault();
 
                 _context.CourseStudents.Remove(courseStudent);
                 _context.SaveChanges();
@@ -107,12 +104,12 @@ namespace GroupGradingAPI.Controllers
          * @return JSONObject - returns a JSONObject confirming student was found; else returns an error
          */
         [EnableCors("AllAccessCors")]
-        [HttpGet("{studentId}/{courseId}")]
-        public ActionResult<string> getStudents(string studentId, string courseId)
+        [HttpGet("{studentId}/{courseCrn}")]
+        public ActionResult<string> getStudents(string studentId, int courseCrn)
         {
             try
             {
-                var courseStudent = _context.CourseStudents.Where(c => c.StudentId == studentId && c.CourseId == courseId).FirstOrDefault();
+                var courseStudent = _context.CourseStudents.Where(c => c.StudentId == studentId && c.CourseCrn == courseCrn).FirstOrDefault();
                 return JsonConvert.SerializeObject(courseStudent);
             }
             catch (Exception e)
@@ -130,19 +127,16 @@ namespace GroupGradingAPI.Controllers
          * @return JSONObject - returns a JSONObject confirming student information was changed; else returns an error
          */
         [EnableCors("AllAccessCors")]
-        [HttpPut("{studentId}/{courseId}")]
-        public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] string courseId)
+        [HttpPut("{studentId}/{courseCrn}")]
+        public ActionResult<string> setStudentData([FromBody] CourseStudent model, [FromRoute] string studentId, [FromRoute] int courseCrn)
         {
             try
             {
                 var courseStudent = _context.CourseStudents
-                    .Where(c => c.StudentId == studentId && c.CourseId == courseId).FirstOrDefault();
+                    .Where(c => c.StudentId == studentId && c.CourseCrn == courseCrn).FirstOrDefault();
 
-                courseStudent.CourseId = model.CourseId;
-                courseStudent.CourseCrn = model.CourseCrn;
                 courseStudent.CourseTerm = model.CourseTerm;
                 courseStudent.Courseyear = model.Courseyear;
-                //courseStudent.StudentId = model.StudentId;
 
                 _context.CourseStudents.Update(courseStudent);
                 _context.SaveChanges();

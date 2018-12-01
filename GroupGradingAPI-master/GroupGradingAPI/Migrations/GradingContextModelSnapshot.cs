@@ -40,18 +40,23 @@ namespace GroupGradingAPI.Migrations
 
             modelBuilder.Entity("GroupGradingAPI.Models.CourseStudent", b =>
                 {
-                    b.Property<string>("StudentId")
-                        .ValueGeneratedOnAdd();
+                    b.Property<int>("CourseStudentId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CourseCrn");
-
-                    b.Property<string>("CourseId");
 
                     b.Property<string>("CourseTerm");
 
                     b.Property<int>("Courseyear");
 
-                    b.HasKey("StudentId");
+                    b.Property<string>("StudentGroupGroupName");
+
+                    b.Property<string>("StudentId");
+
+                    b.HasKey("CourseStudentId");
+
+                    b.HasIndex("StudentGroupGroupName");
 
                     b.ToTable("CourseStudents");
                 });
@@ -95,6 +100,8 @@ namespace GroupGradingAPI.Migrations
                     b.Property<string>("GroupName")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("CourseCrn");
+
                     b.Property<string>("CourseId");
 
                     b.Property<string>("EvaluationId");
@@ -130,11 +137,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-
-                        new { Id = "1", ConcurrencyStamp = "372d15e2-b09a-4f4d-ae28-d9b8883ec8e4", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "dcebf21a-2abf-4870-87fe-6dc2af0efa14", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "5f57848a-af12-4b70-9bfe-de5df0f0c3c5", Name = "Student", NormalizedName = "STUDENT" }
-
+                        new { Id = "1", ConcurrencyStamp = "3198838a-f625-42eb-842d-4f96336ddc9d", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "5d094cb1-e4ff-4d04-8d52-9ccbbe385edf", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "15c52df6-5458-4694-ac95-cb26d9d4eb50", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 
@@ -299,8 +304,6 @@ namespace GroupGradingAPI.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("CourseCrn");
-
                     b.Property<string>("FirstName")
                         .HasColumnName("Student_FirstName");
 
@@ -310,6 +313,13 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("Student");
 
                     b.HasDiscriminator().HasValue("Student");
+                });
+
+            modelBuilder.Entity("GroupGradingAPI.Models.CourseStudent", b =>
+                {
+                    b.HasOne("GroupGradingAPI.Models.StudentGroup")
+                        .WithMany("Students")
+                        .HasForeignKey("StudentGroupGroupName");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

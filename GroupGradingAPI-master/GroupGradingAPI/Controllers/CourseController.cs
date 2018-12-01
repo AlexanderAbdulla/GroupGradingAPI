@@ -162,5 +162,59 @@ namespace GroupGradingAPI.Controllers
             }
             return JsonConvert.SerializeObject("Error");
         }
+		
+		/**
+        *  Gets all the courses the  specified instructor teaches
+        */
+       [HttpGet("i/{id}")]
+       public ActionResult<string> getCoursesForInstructior([FromRoute] string id)
+       {
+           try
+           {
+               try
+               {
+                   var courses = _context.Courses.Where(c => c.InstructorId == id);
+                   return JsonConvert.SerializeObject(courses);
+               }
+               catch (Exception e)
+               {
+                   //
+               }
+               return JsonConvert.SerializeObject("Error");
+           }
+           catch (Exception e) { }
+           return JsonConvert.SerializeObject("Error");
+       }
+
+
+
+       /**
+        *  Gets all the courses the specified student is currently taking.
+        */
+       [HttpGet("s/{id}")]
+       public ActionResult<string> getCoursesForStudent([FromRoute] string id)
+       {
+           try
+           {
+               try
+               {
+                   var courseStudents = _context.CourseStudents.Where(s => s.StudentId == id).ToList();
+                   var courses = _context.Courses.Where(c => c.CourseCrn == courseStudents.FirstOrDefault().CourseCrn).ToList();
+                   for (int i = 1; i < courseStudents.Count(); i++)
+                   {
+                       courses.Add(_context.Courses.Where(c => c.CourseCrn == courseStudents[i].CourseCrn).FirstOrDefault());
+
+                   }
+                   return JsonConvert.SerializeObject(courses);
+               }
+               catch (Exception e)
+               {
+                   //
+               }
+               return JsonConvert.SerializeObject("Error1");
+           }
+           catch (Exception e) { }
+           return JsonConvert.SerializeObject("Error");
+       }
     }
 }
