@@ -13,7 +13,8 @@ using Newtonsoft.Json;
 
 namespace GroupGradingAPI.Controllers
 {
-    [Authorize(Roles = "Teacher, Student")]
+    [EnableCors("AllAccessCors")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : Controller
@@ -40,7 +41,6 @@ namespace GroupGradingAPI.Controllers
         * @param CreateCourseViewModel model - database context
         * @return returns JSON Object when course information is correct; else returns an error
         */
-        [EnableCors("AllAccessCors")]
         [HttpPost("create")]
         public ActionResult<string> createCourse([FromBody] CreateCourseViewModel model)
         {
@@ -67,7 +67,6 @@ namespace GroupGradingAPI.Controllers
         * @param int id - Course ID
         * @return returns JSON Object that confirms deletion; else returns an error
         */
-        [EnableCors("AllAccessCors")]
         [HttpDelete("delete/{id}")]
         public ActionResult<string> deleteCourse(int id)
         {
@@ -91,7 +90,6 @@ namespace GroupGradingAPI.Controllers
         * @param int id - Course ID
         * @return returns JSON Object of specified course; else returns an error
         */
-        [EnableCors("AllAccessCors")]
         [HttpGet("{id}")]
         public ActionResult<string> getCourse(int id)
         {
@@ -113,7 +111,6 @@ namespace GroupGradingAPI.Controllers
         * @param int id - Course ID
         * @return returns JSON Object upon successful update; else returns an error
         */
-        [EnableCors("AllAccessCors")]
         [HttpPut("{id}")]
         public ActionResult<string> setCourseData([FromBody] Course model, [FromRoute] int id)
         {
@@ -139,7 +136,6 @@ namespace GroupGradingAPI.Controllers
         * Gets all existing courses in the database
         * @return returns a list of courses as a JSON Object; else returns an error
         */
-        [EnableCors("AllAccessCors")]
         [HttpGet]
         public ActionResult<string> getCourseData()
         {
