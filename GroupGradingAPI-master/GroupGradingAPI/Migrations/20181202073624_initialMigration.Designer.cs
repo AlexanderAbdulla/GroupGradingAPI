@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupGradingAPI.Migrations
 {
     [DbContext(typeof(GradingContext))]
-    [Migration("20181201231605_initialMigration")]
+    [Migration("20181202073624_initialMigration")]
     partial class initialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -139,9 +139,9 @@ namespace GroupGradingAPI.Migrations
                     b.ToTable("AspNetRoles");
 
                     b.HasData(
-                        new { Id = "1", ConcurrencyStamp = "b462a45e-a22b-4c9d-991e-72b262dc0bff", Name = "Admin", NormalizedName = "ADMIN" },
-                        new { Id = "2", ConcurrencyStamp = "169d94ff-57d2-4630-90a3-d68a9e44866a", Name = "Teacher", NormalizedName = "TEACHER" },
-                        new { Id = "3", ConcurrencyStamp = "46d8b1ee-45d8-446e-a29f-ebd13eba7618", Name = "Student", NormalizedName = "STUDENT" }
+                        new { Id = "1", ConcurrencyStamp = "c5ef3500-1ba3-46e9-8715-1f0117aba5b1", Name = "Admin", NormalizedName = "ADMIN" },
+                        new { Id = "2", ConcurrencyStamp = "136664f2-8a8f-405a-b920-30861dfa5674", Name = "Teacher", NormalizedName = "TEACHER" },
+                        new { Id = "3", ConcurrencyStamp = "4088fed2-cfba-4b02-a9a6-7d72347841de", Name = "Student", NormalizedName = "STUDENT" }
                     );
                 });
 

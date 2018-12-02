@@ -52,6 +52,8 @@ namespace GroupGradingAPI.Controllers
                 newStudentGroup.EvaluationId = model.EvaluationId;
                 newStudentGroup.GroupName = model.GroupName;
                 newStudentGroup.StudentId = model.StudentId;
+                //I'm not sure Ok to add this or not, so commented out.
+                //newStudentGroup.Students = model.Students;
 
 
                 _context.StudentGroup.Add(newStudentGroup);
@@ -179,8 +181,33 @@ namespace GroupGradingAPI.Controllers
             {
                 try
                 {
-                    var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
+                    var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).ToList();
                     return JsonConvert.SerializeObject(studentGroups);
+                }
+                catch (Exception e)
+                {
+
+                }
+                return JsonConvert.SerializeObject("Error");
+            }
+            catch (Exception e)
+            {
+
+            }
+            return JsonConvert.SerializeObject("Error");
+        }
+
+        [EnableCors("AllAccessCors")]
+        [HttpGet]
+        [Route("studentgroup/i/s/{CourseCrn}")]
+        public ActionResult<string>getStudenListBelongToGroupsByCourse(int CourseCrn)
+        {
+            try
+            {
+                try
+                {
+                    var studentsList = _context.CourseStudents.Where(c => c.CourseCrn == CourseCrn).ToList().FirstOrDefault();
+                    return JsonConvert.SerializeObject(studentsList);
                 }
                 catch (Exception e)
                 {

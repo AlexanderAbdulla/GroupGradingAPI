@@ -245,17 +245,17 @@ namespace GroupGradingAPI.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "1", "b462a45e-a22b-4c9d-991e-72b262dc0bff", "Admin", "ADMIN" });
+                values: new object[] { "1", "c5ef3500-1ba3-46e9-8715-1f0117aba5b1", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "2", "169d94ff-57d2-4630-90a3-d68a9e44866a", "Teacher", "TEACHER" });
+                values: new object[] { "2", "136664f2-8a8f-405a-b920-30861dfa5674", "Teacher", "TEACHER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "3", "46d8b1ee-45d8-446e-a29f-ebd13eba7618", "Student", "STUDENT" });
+                values: new object[] { "3", "4088fed2-cfba-4b02-a9a6-7d72347841de", "Student", "STUDENT" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
