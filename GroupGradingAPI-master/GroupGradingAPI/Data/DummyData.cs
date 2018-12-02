@@ -57,7 +57,7 @@ namespace GroupGradingAPI.Data
             {
               new CourseStudent
               {
-                  CourseId="testest", CourseCrn=1234,CourseTerm="CourseThing", Courseyear=2017
+                  CourseTerm="CourseThing", Courseyear=2017
               }
             };
             return _courses;
@@ -69,7 +69,7 @@ namespace GroupGradingAPI.Data
             {
               new Evaluation
               {
-                  StudentGroupId="groupthese", CourseCrn=1234,CourseTerm="CourseThing", CourseYear=2017, StudentID ="a0012345"
+                  StudentGroupId="groupthese", CourseCrn=1234, CourseTerm="CourseThing", CourseYear=2017, StudentID ="a0012345"
               }
             };
             return _evaluation;

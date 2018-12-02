@@ -93,7 +93,8 @@ namespace GroupGradingAPI.Controllers
          * Gets a group's evaluation by group ID
          * @param string id - group ID
          * @return JSONObject - returns a JSONObject of specified group; else returns an error
-         */        [EnableCors("AllAccessCors")]
+         */
+        [EnableCors("AllAccessCors")]
         [HttpGet("{id}")]
         public ActionResult<string> getEvaluations(string id)
         {
@@ -179,33 +180,6 @@ namespace GroupGradingAPI.Controllers
                 try
                 {
                     var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
-                    return JsonConvert.SerializeObject(studentGroups);
-                }
-                catch (Exception e)
-                {
-
-                }
-                return JsonConvert.SerializeObject("Error");
-            }
-            catch (Exception e)
-            {
-
-            }
-            return JsonConvert.SerializeObject("Error");
-        }
-
-        [EnableCors("AllAccessCors")]
-        [HttpGet]
-        [Route("studentgroup/i/s/{CourseCrn}")]
-        public ActionResult<string> getStudentGroupsWithStudentListByCourse(int CourseCrn)
-        {
-            try
-            {
-                try
-                {
-                    var studentGroups = _context.StudentGroup.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
-                    var studetnList = _context.Students.Where(c => c.CourseCrn == CourseCrn).FirstOrDefault();
-                    JsonConvert.SerializeObject(studetnList);
                     return JsonConvert.SerializeObject(studentGroups);
                 }
                 catch (Exception e)
